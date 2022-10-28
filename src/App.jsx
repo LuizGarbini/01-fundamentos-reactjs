@@ -1,10 +1,10 @@
 import { Header } from "./components/Header.jsx";
-import { Post } from "./Post";
+import { Post } from "./components/Post";
+import { Sidebar } from "./components/Sidebar.jsx";
 
 import styles from "./App.module.css";
 
 import "./global.css";
-import { Sidebar } from "./components/Sidebar.jsx";
 
 export function App() {
   return (
