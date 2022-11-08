@@ -23,7 +23,7 @@ const posts = [
       },
       { type: "link", content: "jane.design/doctorcare" },
     ],
-    publishedAt: new Date("2022-05-03 20:00:00"),
+    publishedAt: new Date("2022-11-07 22:00:00"),
   },
   {
     id: 2,
@@ -41,7 +41,7 @@ const posts = [
       },
       { type: "link", content: "jane.design/doctorcare" },
     ],
-    publishedAt: new Date("2022-11-07 22:00:00"),
+    publishedAt: new Date("2022-11-07 23:00:00"),
   },
 ];
 
@@ -53,11 +53,15 @@ export function App() {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
-          <Post
-            author="Luiz Garbini Neto"
-            content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi odio deserunt similique, odit repellendus omnis incidunt velit nobis blanditiis nulla dignissimos laboriosam rerum ullam illo ipsa soluta vitae explicabo eos."
-          />
-          <Post author="Gabriel Buzzi" content="Um novo post muito legal" />
+          {posts.map((post) => {
+            return (
+              <Post
+                author={post.author}
+                content={post.content}
+                publishedAt={post.publishedAt}
+              />
+            );
+          })}
         </main>
       </div>
     </div>
