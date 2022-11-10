@@ -3,9 +3,15 @@ import ptBR from "date-fns/locale/pt-BR";
 
 import { Avatar } from "./Avatar";
 import { Comment } from "./Comment";
+
 import styles from "./Post.module.css";
 
+import { v4 } from "uuid";
+import { useState } from "react";
+
 export function Post({ author, publishedAt, content }) {
+  const [comments, setComments] = useState([1, 2]);
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -19,6 +25,12 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
+  function handleCreateNewComment() {
+    event.preventDefault();
+
+    setComments([...comments, comments.length + 1]);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -31,7 +43,7 @@ export function Post({ author, publishedAt, content }) {
         </div>
 
         <time
-          title="publishedDateFormatted"
+          title={publishedDateFormatted}
           dateTime={publishedAt.toISOString()}
         >
           {publishedDateRelativeToNow}
@@ -41,10 +53,10 @@ export function Post({ author, publishedAt, content }) {
       <div className={styles.content}>
         {content.map((line) => {
           if (line.type === "paragraph") {
-            return <p>{line.content}</p>;
+            return <p key={v4()}> {line.content}</p>;
           } else if (line.type === "link") {
             return (
-              <p>
+              <p key={v4()}>
                 <a href="#">{line.content}</a>
               </p>
             );
@@ -52,18 +64,20 @@ export function Post({ author, publishedAt, content }) {
         })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
+
         <textarea placeholder="Deixe um comentário" />
+
         <footer>
           <button type="submit"> Publicar</button>
         </footer>
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => {
+          return <Comment key={v4()} />;
+        })}
       </div>
     </article>
   );

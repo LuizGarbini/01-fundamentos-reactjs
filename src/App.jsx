@@ -6,6 +6,8 @@ import styles from "./App.module.css";
 
 import "./global.css";
 
+import { v4 } from "uuid";
+
 const posts = [
   {
     id: 1,
@@ -56,6 +58,7 @@ export function App() {
           {posts.map((post) => {
             return (
               <Post
+                key={v4()}
                 author={post.author}
                 content={post.content}
                 publishedAt={post.publishedAt}
