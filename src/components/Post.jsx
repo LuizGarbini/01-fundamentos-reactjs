@@ -12,6 +12,8 @@ import { v4 } from "uuid";
 export function Post({ author, publishedAt, content }) {
   const [comments, setComments] = useState(["Post muito bacana, hein?"]);
 
+  const [newCommentText, setNewCommentText] = useState("");
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -28,11 +30,12 @@ export function Post({ author, publishedAt, content }) {
   function handleCreateNewComment() {
     event.preventDefault();
 
-    const newCommentText = event.target.comment.value;
-
     setComments([...comments, newCommentText]);
+    setNewCommentText("");
+  }
 
-    event.target.comment.value = " ";
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value);
   }
 
   return (
@@ -71,7 +74,12 @@ export function Post({ author, publishedAt, content }) {
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
 
-        <textarea name="comment" placeholder="Deixe um comentário" />
+        <textarea
+          name="comment"
+          placeholder="Deixe um comentário"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+        />
 
         <footer>
           <button type="submit"> Publicar</button>
